@@ -41,6 +41,17 @@
                 cursor: pointer;
             }
 
+            .instruction {
+                position: relative;
+            }
+
+            .instruction .delete {
+                right: -1em;
+                color: #AAA;
+                position: absolute;
+                cursor: pointer;
+            }
+
             @media print {
                 .add-item,
                 .add-instruction,
@@ -97,14 +108,18 @@
                 var template = '<div class="item"><span class="drag">&equiv;</span><div class="content" contenteditable><br/>1 tbsp olive oil<br/>&nbsp;</div><span class="delete">&#10005;</span></div>';
                 jQuery('.item-after').before(template);
 
-                jQuery('.delete').off('click').on('click', function(e) {
+                jQuery('.item .delete').off('click').on('click', function(e) {
                     jQuery(this).parent('.item').remove();
                 });
             }).click();
 
             jQuery('.add-instruction').click(function(e) {
-                var template = '<h5 contenteditable>Step X</h5><p contenteditable>...</p>';
+                var template = '<div class="instruction"><span class="delete">&#10005;</span><h5 contenteditable>Step X</h5><p contenteditable>...</p></div>';
                 jQuery('.instruction-after').before(template);
+
+                jQuery('.instruction .delete').off('click').on('click', function(e) {
+                    jQuery(this).parent('.instruction').remove();
+                });
             }).click();
 
             jQuery('.ui.rating').rating();
