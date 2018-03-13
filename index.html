@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/components/rating.min.css">
+        <style>
+            .add-item,
+            .add-instruction {
+                color: #AAA;
+                padding: .5em;
+                cursor: pointer;
+            }
+
+            .sortable-chosen,
+            .sortable-drag {
+                border: 2px dashed #AAA !important;
+            }
+
+            .item {
+                position: relative;
+            }
+
+            .item span {
+                position: absolute;
+                left: -1em;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #AAA;
+            }
+
+            @media print {
+                .add-item,
+                .add-instruction,
+                .item span {
+                    display: none;
+                }
+
+                .container {
+                    margin-top: 2em;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="ui container">
+            <p>&nbsp;</p>
+
+            <div class="ui segment">
+                <h2 class="ui header" contenteditable>Some Type of Pasta</h2>
+                <div class="ui star rating" data-rating="3" data-max-rating="5"></div>
+                <div class="ui clearing divider"></div>
+                <p contenteditable>wow so pasta. don't forget the garlic bread.</p>
+                <button class="ui grey basic button" contenteditable><strong>Prep time</strong> 30m</button>
+                <button class="ui grey basic button" contenteditable><strong>Cook time</strong> 45m</button>
+                <button class="ui grey basic button" contenteditable><strong>Total time</strong> 1h15m</button>
+            </div>
+
+            <p>&nbsp;</p>
+
+            <div class="ui two column very relaxed grid">
+                <div class="column">
+                    <h3>Ingredients</h3>
+                    <div class="ui middle aligned divided list" id="items-list">
+                        <div class="item item-before"></div>
+                        <div class="item item-after"></div>
+                        <div class="add-item">&plus; Add Item</div>
+                    </div>
+                </div>
+                <div class="column">
+                    <h3>Instructions</h3>
+                    <div class="instruction-before"></div>
+                    <div class="instruction-after"></div>
+                    <div class="add-instruction">&plus; Add Instruction</div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/components/rating.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+        <script type="text/javascript">
+            jQuery('.add-item').click(function(e) {
+                var template = '<div class="item"><span>&equiv;</span><div class="content" contenteditable><br/>1 tbsp olive oil<br/>&nbsp;</div></div>';
+                jQuery('.item-after').before(template);
+            }).click();
+
+            jQuery('.add-instruction').click(function(e) {
+                var template = '<h5 contenteditable>Step X</h5><p contenteditable>...</p>';
+                jQuery('.instruction-after').before(template);
+            }).click();
+
+            jQuery('.ui.rating').rating();
+
+            var el = document.getElementById('items-list');
+            var sortable = Sortable.create(
+                el,
+                {
+                    chosenClass: 'sortable-chosen',
+                    dragClass: 'sortable-drag',
+                }
+            );
+        </script>
+    </body>
+</html>
