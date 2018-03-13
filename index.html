@@ -22,12 +22,23 @@
                 position: relative;
             }
 
-            .item span {
+            .item .drag {
                 position: absolute;
-                left: -1em;
+                right: .5em;
                 top: 50%;
                 transform: translateY(-50%);
                 color: #AAA;
+                cursor: grab;
+                z-index: 1;
+            }
+
+            .item .delete {
+                position: absolute;
+                right: -1em;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #AAA;
+                cursor: pointer;
             }
 
             @media print {
@@ -83,8 +94,12 @@
 
         <script type="text/javascript">
             jQuery('.add-item').click(function(e) {
-                var template = '<div class="item"><span>&equiv;</span><div class="content" contenteditable><br/>1 tbsp olive oil<br/>&nbsp;</div></div>';
+                var template = '<div class="item"><span class="drag">&equiv;</span><div class="content" contenteditable><br/>1 tbsp olive oil<br/>&nbsp;</div><span class="delete">&#10005;</span></div>';
                 jQuery('.item-after').before(template);
+
+                jQuery('.delete').off('click').on('click', function(e) {
+                    jQuery(this).parent('.item').remove();
+                });
             }).click();
 
             jQuery('.add-instruction').click(function(e) {
@@ -100,6 +115,7 @@
                 {
                     chosenClass: 'sortable-chosen',
                     dragClass: 'sortable-drag',
+                    filter: '.delete',
                 }
             );
         </script>
